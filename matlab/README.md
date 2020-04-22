@@ -12,7 +12,7 @@ Toolboxes utilized:
 
 ## Datasets
 
-The dataset that I used for my experiments is the (M2NIST Dataset)[https://www.kaggle.com/farhanhubble/multimnistm2nist]. The dataset was created in order to teach the basics of semantic segmentation with convolutional neural networks without requiring the use of complex architechtures that take long to train. More details can be found at the above link.
+The dataset that I used for my experiments is the [M2NIST Dataset](https://www.kaggle.com/farhanhubble/multimnistm2nist). The dataset was created in order to teach the basics of semantic segmentation with convolutional neural networks without requiring the use of complex architechtures that take long to train. More details can be found at the above link.
 
 ## Setup and Installation
 
