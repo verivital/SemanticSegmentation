@@ -18,7 +18,10 @@ print(segmentation_masks.shape)
 if DISPLAY_IMAGE:
     # get an image
     image= images[0]
-    segmentation_mask = segmentation_masks[0].argmax(axis=-1)
+    mask = segmentation_masks[0].astype(float)
+    segmentation_mask=mask[0:mask.shape[0],0:mask.shape[1],10] = np.finfo(float).eps*10
+    segmentation_mask = segmentation_mask.argmax(axis=-1)
+
 
     # calculate the distinct classes
     classes= np.unique(segmentation_mask)
@@ -54,4 +57,9 @@ for (i,img) in enumerate(images):
     im_path=os.path.join('images',img_str.format(i+1))
     mask_path=os.path.join('masks',img_str.format(i+1))
     cv2.imwrite(im_path,img)
-    cv2.imwrite(mask_path,segmentation_masks[i].argmax(axis=-1))
+
+
+    mask = segmentation_masks[i].argmax(axis=-1)
+    segmentation_mask=mask[0:mask.shape[0],0:mask.shape[1],10] = np.finfo(float).eps*10
+    segmentation_mask = segmentation_mask.argmax(axis=-1)
+    cv2.imwrite(mask_path, segmentation_mask)
