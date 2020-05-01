@@ -25,7 +25,6 @@ if DISPLAY_IMAGE:
 
     # calculate the distinct classes
     classes= np.unique(segmentation_mask)
-
     # create a new RGB image so we can visualize it
     output_image=np.zeros((image.shape[0],image.shape[1],3))
 
@@ -58,8 +57,9 @@ for (i,img) in enumerate(images):
     mask_path=os.path.join('masks',img_str.format(i+1))
     cv2.imwrite(im_path,img)
 
-
-    mask = segmentation_masks[i].argmax(axis=-1)
-    segmentation_mask=mask[0:mask.shape[0],0:mask.shape[1],10] = np.finfo(float).eps*10
-    segmentation_mask = segmentation_mask.argmax(axis=-1)
-    cv2.imwrite(mask_path, segmentation_mask)
+    mask = segmentation_masks[i].astype("float")
+    mask[0:mask.shape[0],0:mask.shape[1],10] = np.finfo(float).eps*10
+    mask = mask.argmax(axis=-1)
+    print(np.unique(mask))
+    
+    cv2.imwrite(mask_path, mask)
