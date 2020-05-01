@@ -6,6 +6,7 @@ from keras.utils import to_categorical
 import argparse
 from sklearn.utils import shuffle 
 import cv2 
+import os 
 
 """ This code generates the M2NIST Dataset and was inspired by Farhan Ahmad
     (https://github.com/farhanhubble/udacity-connect/blob/master/segmented-generator.ipynb)
@@ -14,9 +15,13 @@ import cv2
 
 class M2NIST:
 
-    def __init__(self,size=5000,digits_per_image=3,random_seed=1234):
+    def __init__(self,img_dir,mask_dir,size=5000,digits_per_image=3,random_seed=1234):
         self.digits_per_image=digits_per_image
+        
         self.size = size 
+        self.img_dir = img_dir
+        self.mask_dir = mask_dir
+
         # Load the MNIST Dataset
         (self.x_train, self.y_train), (_, _) = mnist.load_data()
         
@@ -34,15 +39,20 @@ class M2NIST:
         self.images=[]
         self.masks =[]
 
+        # generate mask and image pairs
         for i in range(self.size):
             img,mask= self.generate_image_segmentation_pair()
             self.images.append(img)
             self.masks.append(mask)
 
-        for (img,mask) in zip(self.images,self.masks):
+        # save images and masks to the specified directories
+        self.save_img_mask()
 
-            cv2.imshow("original image",img)
-            self.visualize_mask(mask)       
+        # visualize if you want
+        #self.visualize_images()
+
+        
+              
 
         # randomly select images from the MNIST dataset
 
@@ -109,10 +119,35 @@ class M2NIST:
         return shuffle(boxes)
 
 
+    def save_img_mask(self):
+        count =1
+        # create a string name for the files
+        img_str = os.path.join(self.img_dir,"image_{}.jpg")
+        mask_str = os.path.join(self.mask_dir,"image_{}.jpg")
+
+        for (img,mask) in zip(self.images,self.masks):
+            # bias last entry of background
+            mask = mask.astype(float)
+            mask[0:mask.shape[0],0:mask.shape[1],10] = np.finfo(float).eps*10
+            segmentation_mask = mask.argmax(axis=-1)
+
+            # save the images
+            cv2.imwrite(img_str.format(count),img)
+            cv2.imwrite(mask_str.format(count),segmentation_mask)
+            count +=1
+
+    def visualize_images(self):
+        for (img,mask) in zip(self.images,self.masks):
+            cv2.namedWindow('original image',cv2.WINDOW_NORMAL)
+            cv2.resizeWindow('original image', 600,600)
+            cv2.imshow("original image",img)
+            self.visualize_mask(mask) 
+
     def visualize_mask(self,mask):
 
+        # bias the last entry in the mask
         mask = mask.astype(float)
-        segmentation_mask=mask[0:mask.shape[0],0:mask.shape[1],10] = np.finfo(float).eps*10
+        mask[0:mask.shape[0],0:mask.shape[1],10] = np.finfo(float).eps*10
         segmentation_mask = mask.argmax(axis=-1)
         # calculate the distinct classes
         classes= np.unique(segmentation_mask)
@@ -130,6 +165,8 @@ class M2NIST:
 	        indices= np.where(segmentation_mask==classes[j])
 	        output_image[indices]=colors[j]
 
+        cv2.namedWindow('image',cv2.WINDOW_NORMAL)
+        cv2.resizeWindow('image', 600,600)
         cv2.imshow("image",output_image)
         cv2.waitKey(0)
 
@@ -192,14 +229,19 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("-n", "--num_images", required=False,type=int,help="number of training images to generate")
     ap.add_argument("-d", "--digits_per_image", required=False,type=int,help="how many images to put into the output image")
+    ap.add_argument("-i,","--img_dir",required=True,help="path to directory to store image files")
+    ap.add_argument("-m","--mask_dir",required=True,help="path to directory to store mask files")
     args = vars(ap.parse_args())
+
     # Instantiate M2NIST Objects
     if(args['digits_per_image'] and args['num_images']):
-        m2nist = M2NIST(size=args['num_images'],
+        m2nist = M2NIST(args['img_dir'], args['mask_dir'],size=args['num_images'],
                         digits_per_image=args['digits_per_image'])
     elif(args['digits_per_image']):
-        m2nist = M2NIST(digits_per_image=args['digits_per_image'])
+        m2nist = M2NIST(args['img_dir'], args['mask_dir'],digits_per_image=args['digits_per_image'])
     elif (args['num_images']):
-        m2nist = M2NIST(size=args['num_images'])
+        m2nist = M2NIST(args['img_dir'], args['mask_dir'],size=args['num_images'])
     else:
-        mnist=M2NIST()
+        mnist=M2NIST(args['img_dir'], args['mask_dir'])
+
+        
