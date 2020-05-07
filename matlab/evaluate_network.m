@@ -22,7 +22,7 @@ pxdsPred = semanticseg(plds,net,'MiniBatchSize', 64, 'WriteLocation','preds');
 [pred_image,pred_image_gt]=readByIndex(plds,1);
 
 I = cell2mat(test_image.inputImage);
-B = uint8(test_image.pixelLabelImage{:});
+B = test_image.pixelLabelImage{:};
 C = labeloverlay(I,B);
 imshow(C);
 figure()

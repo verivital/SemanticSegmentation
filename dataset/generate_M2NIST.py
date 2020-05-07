@@ -7,6 +7,8 @@ import argparse
 from sklearn.utils import shuffle 
 import cv2 
 import os 
+import sys
+np.set_printoptions(threshold=sys.maxsize)
 
 """ This code generates the M2NIST Dataset and was inspired by Farhan Ahmad
     (https://github.com/farhanhubble/udacity-connect/blob/master/segmented-generator.ipynb)
@@ -122,14 +124,20 @@ class M2NIST:
     def save_img_mask(self):
         count =1
         # create a string name for the files
-        img_str = os.path.join(self.img_dir,"image_{}.jpg")
-        mask_str = os.path.join(self.mask_dir,"image_{}.jpg")
+        img_str = os.path.join(self.img_dir,"image_{}.png")
+        mask_str = os.path.join(self.mask_dir,"image_{}.png")
 
         for (img,mask) in zip(self.images,self.masks):
             # bias last entry of background
             mask = mask.astype(float)
             mask[0:mask.shape[0],0:mask.shape[1],10] = np.finfo(float).eps*10
             segmentation_mask = mask.argmax(axis=-1)
+            # calculate the distinct classes
+            classes= np.unique(segmentation_mask)
+
+            # convert images back to unint8
+            segmentation_mask=segmentation_mask.astype('uint8')
+            img=img.astype('uint8')
 
             # save the images
             cv2.imwrite(img_str.format(count),img)

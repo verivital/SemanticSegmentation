@@ -62,4 +62,7 @@ for (i,img) in enumerate(images):
     mask = mask.argmax(axis=-1)
     print(np.unique(mask))
     
+    # convert back to unit8
+    masj=mask.astype('uint8')
+    
     cv2.imwrite(mask_path, mask)
