@@ -1,8 +1,8 @@
-# Data Generation 
+## Data Generation 
 
-To generate M2NIST Data one can use the [generate_M2NIST.py](generate_M2NIST.py) file.
+To generate M2NIST data one can use the utility [generate_M2NIST.py](generate_M2NIST.py)
 
-# Required Packages
+## Required Packages
 
 - Keras
 - OpenCV
@@ -26,6 +26,7 @@ optional arguments:
                         path to directory to store mask files
 ```
 
-**Example:** 
-``` python generate_M2NIST.py -n 5000 -d 3 -i images/ -m masks/ 
+### Example:
+``` 
+python generate_M2NIST.py -n 5000 -d 3 -i images/ -m masks/ 
 ``` 
