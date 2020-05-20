@@ -1,3 +1,4 @@
 # ignore all image files
 *.png
 *.jpg
+*.hdf5
