@@ -2,3 +2,4 @@
 *.png
 *.jpg
 *.hdf5
+*.pyc

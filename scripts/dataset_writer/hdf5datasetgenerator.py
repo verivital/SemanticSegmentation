@@ -6,7 +6,7 @@ import h5py
 class HDF5DatasetGenerator:
 
     def __init__(self,dbPath,batchSize,preprocessors=None,
-                        aug=None,binarize=True, classes=2):
+                        aug=None,normalize=True):
         # store the batch size, preprocessors, and data augmentor,
         # whether or not the labels should be binarized, along with 
         # the total number of classes
@@ -17,14 +17,13 @@ class HDF5DatasetGenerator:
         self.batchSize= batchSize
         self.preprocessors = preprocessors
         self.aug = aug 
-        self.binarize = binarize
-        self.classes = classes
+        self.normalize= normalize
 
         # open the HDF5 database for reading and determine the total 
         # number of entries in the database
 
         self.db = h5py.File(dbPath,'r')
-        self.numImages = self.db["labels"].shape[0]
+        self.numImages = self.db["masks"].shape[0]
 
     # next we need to define a generator function which as the name suggests 
     # is responsible for yielding batchs of images and classes to the .fit_generator
@@ -43,13 +42,11 @@ class HDF5DatasetGenerator:
 
             for i in range(0,self.numImages,self.batchSize):
                 # extract the images and labels from the HDF5 dataset
-
+                
                 images = self.db["images"][i:i+self.batchSize]
-                labels = self.db["labels"][i:i+self.batchSize]
-
-                # check to see if the labels should be binarized 
-                if self.binarize:
-                    labels = np_utils.to_categorical(labels,self.classes)
+                if self.normalize:
+                    images= images/ 255.0 
+                masks = self.db["masks"][i:i+self.batchSize]
 
                 # check to see if our preprocessors are not None
                 if self.preprocessors is not None:
@@ -71,9 +68,9 @@ class HDF5DatasetGenerator:
                 
                 # if the data augmentor exists, apply it 
                 if self.aug is not None:
-                    (images,labels) = next(self.aug.flow(images,labels,batch_size=self.batchSize))
+                    (images,masks) = next(self.aug.flow(images,masks,batch_size=self.batchSize))
                 
-                yield (images,labels)
+                yield (images,masks)
             epochs +=1
 
     # close the database
