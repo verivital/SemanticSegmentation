@@ -58,28 +58,54 @@ test_plds= pixelLabelImageDatastore(test_imds,test_pxds);
 % Define Segmentation Network
 numClasses = 11;
 numFilters = 128;
-filterSize = 3;
 imageSize = [64,84,1];
 layers = [
-    imageInputLayer(imageSize)
-    convolution2dLayer(filterSize,numFilters,'Padding',1)
+    imageInputLayer(imageSize,'Name','input')
+    
+    % block 1
+    convolution2dLayer(3,64,'Padding','same','Name','conv1_1')
+    reluLayer('Name','relu1_1')
+    convolution2dLayer(3,64,'Padding','same','Name','conv1_2')
+    reluLayer('Name','relu1_2')
+    maxPooling2dLayer(2,'Stride',2,'Name','pool_1')
+    
+    % block 2
+    convolution2dLayer(3,128,'Padding','same')
+    reluLayer()
+    convolution2dLayer(3,128,'Padding','same')
     reluLayer()
     maxPooling2dLayer(2,'Stride',2)
-    convolution2dLayer(filterSize,numFilters,'Padding',1)
+    
+    % block 3
+    convolution2dLayer(3,256,'Padding','same')
     reluLayer()
-    transposedConv2dLayer(4,numFilters,'Stride',2,'Cropping',1);
+    convolution2dLayer(3,256,'Padding','same')
+    reluLayer()
+    
+    % encoder upsampling
+    transposedConv2dLayer(3,256,'Stride',2,'Cropping','same');
+    reluLayer()
+    
+    transposedConv2dLayer(3,512,'Stride',2,'Cropping','same');
+    reluLayer()
+    
+    % class layer
     convolution2dLayer(1,numClasses);
     softmaxLayer()
     pixelClassificationLayer('Name','labels','Classes',tbl.Name,'ClassWeights',classWeights)
-    ];
+ ];
+
+analyzeNetwork(layers)
+
+
 
 % define optimizer
 opts = trainingOptions('sgdm', ...
-    'InitialLearnRate',1e-2, ...
+    'InitialLearnRate',1e-3, ...
     'LearnRateSchedule','piecewise',...
-    'LearnRateDropPeriod',60,...
+    'LearnRateDropPeriod',10,...
     'LearnRateDropFactor',0.3,...
-    'MaxEpochs',300,...
+    'MaxEpochs',10,...
     'Momentum', 0.9,...
     'ExecutionEnvironment','parallel',...
     'MiniBatchSize',64, ...
