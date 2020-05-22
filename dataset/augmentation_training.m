@@ -50,11 +50,6 @@ test_plds= pixelLabelImageDatastore(test_imds,test_pxds);
 
 
 
-
-
-
-
-
 % Define Segmentation Network
 numClasses = 11;
 numFilters = 128;
@@ -63,30 +58,30 @@ layers = [
     imageInputLayer(imageSize,'Name','input')
     
     % block 1
-    convolution2dLayer(3,64,'Padding','same','Name','conv1_1')
+    convolution2dLayer(3,128,'Padding','same','Name','conv1_1')
     reluLayer('Name','relu1_1')
-    convolution2dLayer(3,64,'Padding','same','Name','conv1_2')
+    convolution2dLayer(3,128,'Padding','same','Name','conv1_2')
     reluLayer('Name','relu1_2')
     maxPooling2dLayer(2,'Stride',2,'Name','pool_1')
     
     % block 2
-    convolution2dLayer(3,128,'Padding','same')
+    convolution2dLayer(3,256,'Padding','same')
     reluLayer()
-    convolution2dLayer(3,128,'Padding','same')
+    convolution2dLayer(3,256,'Padding','same')
     reluLayer()
     maxPooling2dLayer(2,'Stride',2)
     
     % block 3
-    convolution2dLayer(3,256,'Padding','same')
+    convolution2dLayer(3,512,'Padding','same')
     reluLayer()
-    convolution2dLayer(3,256,'Padding','same')
+    convolution2dLayer(3,512,'Padding','same')
     reluLayer()
     
     % encoder upsampling
-    transposedConv2dLayer(3,256,'Stride',2,'Cropping','same');
+    transposedConv2dLayer(3,512,'Stride',2,'Cropping','same');
     reluLayer()
     
-    transposedConv2dLayer(3,512,'Stride',2,'Cropping','same');
+    transposedConv2dLayer(3,1024,'Stride',2,'Cropping','same');
     reluLayer()
     
     % class layer
@@ -103,11 +98,11 @@ analyzeNetwork(layers)
 opts = trainingOptions('sgdm', ...
     'InitialLearnRate',1e-3, ...
     'LearnRateSchedule','piecewise',...
-    'LearnRateDropPeriod',10,...
+    'LearnRateDropPeriod',25,...
     'LearnRateDropFactor',0.3,...
-    'MaxEpochs',10,...
+    'MaxEpochs',30,...
     'Momentum', 0.9,...
-    'ExecutionEnvironment','parallel',...
+    'ExecutionEnvironment','gpu',...
     'MiniBatchSize',64, ...
     'Plots','training-progress',...
     'ValidationPatience',10);
