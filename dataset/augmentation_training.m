@@ -62,14 +62,14 @@ layers = [
     reluLayer('Name','relu1_1')
     convolution2dLayer(3,128,'Padding','same','Name','conv1_2')
     reluLayer('Name','relu1_2')
-    maxPooling2dLayer(2,'Stride',2,'Name','pool_1')
+    averagePooling2dLayer(2,'Stride',2,'Name','pool_1')
     
     % block 2
     convolution2dLayer(3,256,'Padding','same')
     reluLayer()
     convolution2dLayer(3,256,'Padding','same')
     reluLayer()
-    maxPooling2dLayer(2,'Stride',2)
+    averagePooling2dLayer(2,'Stride',2)
     
     % block 3
     convolution2dLayer(3,512,'Padding','same')
