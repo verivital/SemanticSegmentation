@@ -58,16 +58,16 @@ layers = [
     imageInputLayer(imageSize,'Name','input')
     
     % block 1
-    convolution2dLayer(3,128,'Padding','same','Name','conv1_1')
+    convolution2dLayer(5,128,'Padding','same','Name','conv1_1')
     reluLayer('Name','relu1_1')
-    convolution2dLayer(3,128,'Padding','same','Name','conv1_2')
+    convolution2dLayer(5,128,'Padding','same','Name','conv1_2')
     reluLayer('Name','relu1_2')
     averagePooling2dLayer(2,'Stride',2,'Name','pool_1')
     
     % block 2
-    convolution2dLayer(3,256,'Padding','same')
+    convolution2dLayer(5,256,'Padding','same')
     reluLayer()
-    convolution2dLayer(3,256,'Padding','same')
+    convolution2dLayer(5,256,'Padding','same')
     reluLayer()
     averagePooling2dLayer(2,'Stride',2)
     
@@ -81,7 +81,7 @@ layers = [
     transposedConv2dLayer(3,512,'Stride',2,'Cropping','same');
     reluLayer()
     
-    transposedConv2dLayer(3,1024,'Stride',2,'Cropping','same');
+    transposedConv2dLayer(5,1024,'Stride',2,'Cropping','same');
     reluLayer()
     
     % class layer
@@ -98,7 +98,7 @@ analyzeNetwork(layers)
 opts = trainingOptions('sgdm', ...
     'InitialLearnRate',1e-3, ...
     'LearnRateSchedule','piecewise',...
-    'LearnRateDropPeriod',25,...
+    'LearnRateDropPeriod',15,...
     'LearnRateDropFactor',0.3,...
     'MaxEpochs',30,...
     'Momentum', 0.9,...
