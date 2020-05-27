@@ -19,7 +19,7 @@ class M2NIST:
 
     def __init__(self,img_dir,mask_dir,size=5000,digits_per_image=3,random_seed=1234):
         self.digits_per_image=digits_per_image
-        
+    
         self.size = size 
         self.img_dir = img_dir
         self.mask_dir = mask_dir
@@ -48,7 +48,7 @@ class M2NIST:
             self.masks.append(mask)
 
         # save images and masks to the specified directories
-        self.save_img_mask()
+        #self.save_img_mask()
 
         # visualize if you want
         #self.visualize_images()
@@ -90,7 +90,7 @@ class M2NIST:
             if x_off_end <= self.canvas_size[0] and y_off_end <= self.canvas_size[1]:
                 src_img = src_images[i]
                 src_digit = src_labels[i]
-                labels[x_off_start:x_off_end, y_off_start:y_off_end,src_digit] = src_img
+                labels[y_off_start:y_off_end,x_off_start:x_off_end,src_digit] = src_img
 
 
 
