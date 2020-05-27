@@ -58,17 +58,19 @@ layers = [
     imageInputLayer(imageSize,'Name','input')
     
     % block 1
-    convolution2dLayer(5,128,'Padding','same','Name','conv1_1')
+    convolution2dLayer(3,128,'Padding','same','Name','conv1_1')
     reluLayer('Name','relu1_1')
-    convolution2dLayer(5,128,'Padding','same','Name','conv1_2')
+    convolution2dLayer(3,128,'Padding','same','Name','conv1_2')
     reluLayer('Name','relu1_2')
+    batchNormalizationLayer('Name','BN1')
     averagePooling2dLayer(2,'Stride',2,'Name','pool_1')
     
     % block 2
-    convolution2dLayer(5,256,'Padding','same')
+    convolution2dLayer(3,256,'Padding','same')
     reluLayer()
-    convolution2dLayer(5,256,'Padding','same')
+    convolution2dLayer(3,256,'Padding','same')
     reluLayer()
+    batchNormalizationLayer('Name','BN2')
     averagePooling2dLayer(2,'Stride',2)
     
     % block 3
@@ -76,13 +78,23 @@ layers = [
     reluLayer()
     convolution2dLayer(3,512,'Padding','same')
     reluLayer()
+    batchNormalizationLayer('Name','BN3')
+    
+    % block 4
+    convolution2dLayer(3,512,'Padding','same')
+    reluLayer()
+    convolution2dLayer(3,512,'Padding','same')
+    reluLayer()
+    batchNormalizationLayer('Name','BN6')
     
     % encoder upsampling
     transposedConv2dLayer(3,512,'Stride',2,'Cropping','same');
     reluLayer()
+    batchNormalizationLayer('Name','BN4')
     
     transposedConv2dLayer(5,1024,'Stride',2,'Cropping','same');
     reluLayer()
+    batchNormalizationLayer('Name','BN5')
     
     % class layer
     convolution2dLayer(1,numClasses);
@@ -96,14 +108,14 @@ analyzeNetwork(layers)
 
 % define optimizer
 opts = trainingOptions('sgdm', ...
-    'InitialLearnRate',1e-3, ...
+    'InitialLearnRate',2e-3, ...
     'LearnRateSchedule','piecewise',...
-    'LearnRateDropPeriod',15,...
-    'LearnRateDropFactor',0.3,...
-    'MaxEpochs',30,...
+    'LearnRateDropPeriod',3,...
+    'LearnRateDropFactor',0.5,...
+    'MaxEpochs',9,...
     'Momentum', 0.9,...
     'ExecutionEnvironment','gpu',...
-    'MiniBatchSize',64, ...
+    'MiniBatchSize',32, ...
     'Plots','training-progress',...
     'ValidationPatience',10);
 
