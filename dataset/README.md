@@ -30,3 +30,12 @@ optional arguments:
 ``` 
 python generate_M2NIST.py -n 5000 -d 3 -i images/ -m masks/ 
 ``` 
+
+Once the predictions have been made you can visualize the segmentation predictions and obtain a plot such as the following:
+
+![Network Predictions](net75iou_predicted.png "Network Predictions")
+
+The above plot was produced by the network file [net_75iou.mat](./models/net_75iou.mat).
+
+
+
