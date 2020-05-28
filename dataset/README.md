@@ -33,9 +33,46 @@ python generate_M2NIST.py -n 5000 -d 3 -i images/ -m masks/
 
 Once the predictions have been made you can visualize the segmentation predictions and obtain a plot such as the following:
 
-![Network Predictions](net75iou_predicted.png "Network Predictions")
+![Network Predictions](./readme_images/net75iou_predicted.png "Network Predictions")
 
 The above plot was produced by the network file [net_75iou.mat](./models/net_75iou.mat).
+
+
+## Generating the M2NIST (28 x 56) Dataset
+
+```
+usage: generate2856.py [-h] [-n NUM_IMAGES] -i, IMG_DIR -m MASK_DIR
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -n NUM_IMAGES, --num_images NUM_IMAGES
+                        number of training images to generate
+  -i, IMG_DIR, --img_dir IMG_DIR
+                        path to directory to store image files
+  -m MASK_DIR, --mask_dir MASK_DIR
+                        path to directory to store mask files
+```
+
+### Example:
+``` 
+python generate2856.py -n 5000 -i images/ -m masks/
+python generate2856.py -n 5000 -i test_images/ -m test_masks/ 
+``` 
+
+
+## Generating MNIST (28 x 28) Segmentation Masks 
+usage: generate_MNIST_masks.py [-h] -i, IMG_DIR -m MASK_DIR
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i, IMG_DIR, --img_dir IMG_DIR
+                        path to directory to store image files
+  -m MASK_DIR, --mask_dir MASK_DIR
+                        path to directory to store mask files
+
+![Network Predictions](./readme_images/mnist.png "Network Predictions")
+
+The above plot was produced by the network file [net_mnist.mat](./models/net_mnist.mat).
 
 
 
