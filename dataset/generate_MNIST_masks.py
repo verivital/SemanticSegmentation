@@ -19,10 +19,10 @@ class M2NIST_MASK:
 
 
             # Load the MNIST Dataset
-            (self.x_train, self.y_train), (_, _) = mnist.load_data()
+            (self.x_train, self.y_train), (self.x_test, self.y_test) = mnist.load_data()
             
             # Shuffle the dataset
-            self.x_train,self.y_train = shuffle(self.x_train,self.y_train,random_state=1615)
+            self.x_train,self.y_train = shuffle(self.x_train,self.y_train,random_state=1617)
 
             # lists for images and segementation masks
             self.images=[]
