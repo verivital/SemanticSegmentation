@@ -59,7 +59,6 @@ layers = [
     
     % block 1
     convolution2dLayer(3,128,'Padding','same','Name','conv1_1')
-    reluLayer('Name','relu1_1')
     convolution2dLayer(3,128,'Padding','same','Name','conv1_2')
     reluLayer('Name','relu1_2')
     batchNormalizationLayer('Name','BN1')
@@ -67,7 +66,6 @@ layers = [
     
     % block 2
     convolution2dLayer(3,256,'Padding','same')
-    reluLayer()
     convolution2dLayer(3,256,'Padding','same')
     reluLayer()
     batchNormalizationLayer('Name','BN2')
@@ -75,15 +73,14 @@ layers = [
     
     % block 3
     convolution2dLayer(3,512,'Padding','same')
-    reluLayer()
     convolution2dLayer(3,512,'Padding','same')
     reluLayer()
     batchNormalizationLayer('Name','BN3')
     
     % encoder upsampling
     transposedConv2dLayer(3,512,'Stride',2,'Cropping','same');
-    reluLayer()
-    batchNormalizationLayer('Name','BN4')
+    %reluLayer()
+    %batchNormalizationLayer('Name','BN4')
     
     transposedConv2dLayer(5,1024,'Stride',2,'Cropping','same');
     reluLayer()
