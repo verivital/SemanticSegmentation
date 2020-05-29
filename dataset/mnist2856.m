@@ -60,31 +60,31 @@ layers = [
     % block 1
     convolution2dLayer(3,128,'Padding','same','Name','conv1_1')
     reluLayer('Name','relu1_1')
-    convolution2dLayer(3,128,'Padding','same','Name','conv1_2')
-    reluLayer('Name','relu1_2')
+%     convolution2dLayer(3,128,'Padding','same','Name','conv1_2')
+%     reluLayer('Name','relu1_2')
     batchNormalizationLayer('Name','BN1')
     averagePooling2dLayer(2,'Stride',2,'Name','pool_1')
     
     % block 2
     convolution2dLayer(3,256,'Padding','same')
     reluLayer()
-    convolution2dLayer(3,256,'Padding','same')
-    reluLayer()
+%     convolution2dLayer(3,256,'Padding','same')
+%     reluLayer()
     batchNormalizationLayer('Name','BN2')
     averagePooling2dLayer(2,'Stride',2)
     
     % block 3
     convolution2dLayer(3,512,'Padding','same')
     reluLayer()
-    convolution2dLayer(3,512,'Padding','same')
-    reluLayer()
+%     convolution2dLayer(3,512,'Padding','same')
+%     reluLayer()
     batchNormalizationLayer('Name','BN3')
     
     % block 4
     convolution2dLayer(3,512,'Padding','same')
     reluLayer()
-    convolution2dLayer(3,512,'Padding','same')
-    reluLayer()
+%     convolution2dLayer(3,512,'Padding','same')
+%     reluLayer()
     batchNormalizationLayer('Name','BN6')
     
     % encoder upsampling
