@@ -78,7 +78,8 @@ class M2NIST_2856:
             y_off_start = boxes[box][1]
             x_off_end = boxes[box][2]
             y_off_end = boxes[box][3]
- 
+
+            boxes.pop(box)
            
         
             src_digit = src_labels[i]
