@@ -63,7 +63,8 @@ layers = [
 %     convolution2dLayer(3,128,'Padding','same','Name','conv1_2')
 %     reluLayer('Name','relu1_2')
     batchNormalizationLayer('Name','BN1')
-    averagePooling2dLayer(2,'Stride',2,'Name','pool_1')
+    %averagePooling2dLayer(2,'Stride',2,'Name','pool_1')
+    maxPooling2dLayer(2,'Stride',2)
     
     % block 2
     convolution2dLayer(3,256,'Padding','same')
@@ -71,7 +72,8 @@ layers = [
 %     convolution2dLayer(3,256,'Padding','same')
 %     reluLayer()
     batchNormalizationLayer('Name','BN2')
-    averagePooling2dLayer(2,'Stride',2)
+    %averagePooling2dLayer(2,'Stride',2)
+    maxPooling2dLayer(2,'Stride',2)
     
     % block 3
     convolution2dLayer(3,512,'Padding','same')
@@ -89,12 +91,12 @@ layers = [
     
     % encoder upsampling
     transposedConv2dLayer(3,512,'Stride',2,'Cropping','same');
-    reluLayer()
-    batchNormalizationLayer('Name','BN4')
+    %reluLayer()
+    %batchNormalizationLayer('Name','BN4')
     
     transposedConv2dLayer(5,1024,'Stride',2,'Cropping','same');
-    reluLayer()
-    batchNormalizationLayer('Name','BN5')
+    %reluLayer()
+    %batchNormalizationLayer('Name','BN5')
     
     % class layer
     convolution2dLayer(1,numClasses);
