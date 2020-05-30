@@ -83,7 +83,7 @@ layers = [
     %batchNormalizationLayer('Name','BN4')
     
     transposedConv2dLayer(5,1024,'Stride',2,'Cropping','same');
-    reluLayer()
+    %reluLayer()
     batchNormalizationLayer('Name','BN5')
     
     % class layer
