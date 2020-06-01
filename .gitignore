@@ -1,5 +1,5 @@
 # ignore all image files
+*.pyc
 *.png
 *.jpg
 *.hdf5
-*.pyc
