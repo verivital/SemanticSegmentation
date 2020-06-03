@@ -59,34 +59,47 @@ layers = [
     
     % block 1
     convolution2dLayer(3,128,'DilationFactor',2,'Padding','same','Name','conv1_1')
-    convolution2dLayer(3,128,'DilationFactor',2,'Padding','same','Name','conv1_2')
+    convolution2dLayer(3,128,'DilationFactor',1,'Padding','same','Name','conv1_2')
+    convolution2dLayer(3,128,'DilationFactor',2,'Padding','same','Name','conv1_3')
+    convolution2dLayer(3,128,'DilationFactor',1,'Padding','same','Name','conv1_4')
     reluLayer('Name','relu1')
     batchNormalizationLayer('Name','BN1')
     
     % block 2
     convolution2dLayer(3,256,'DilationFactor',4,'Padding','same','Name','conv2_1')
-    convolution2dLayer(3,256,'DilationFactor',4,'Padding','same','Name','conv2_2')
+    convolution2dLayer(3,256,'DilationFactor',2,'Padding','same','Name','conv2_2')
+    convolution2dLayer(3,256,'DilationFactor',4,'Padding','same','Name','conv2_3')
+    convolution2dLayer(3,256,'DilationFactor',2,'Padding','same','Name','conv2_4')
     reluLayer('Name','relu2')
     batchNormalizationLayer('Name','BN2')
     
     
-    % block 3
-    convolution2dLayer(3,512,'DilationFactor',8,'Padding','same','Name','conv3_1')
-    convolution2dLayer(3,512,'DilationFactor',8,'Padding','same','Name','conv3_2')
-    reluLayer('Name','relu3')
+     % block 2
+    convolution2dLayer(3,256,'DilationFactor',4,'Padding','same','Name','conv2_1')
+    convolution2dLayer(3,256,'DilationFactor',8,'Padding','same','Name','conv2_2')
+    convolution2dLayer(3,256,'DilationFactor',4,'Padding','same','Name','conv2_3')
+    convolution2dLayer(3,256,'DilationFactor',8,'Padding','same','Name','conv2_4')
+    reluLayer('Name','relu2')
     batchNormalizationLayer('Name','BN3')
     
-    % block 4
-    convolution2dLayer(3,256,'DilationFactor',4,'Padding','same','Name','conv4_1')
-    convolution2dLayer(3,256,'DilationFactor',4,'Padding','same','Name','conv4_2')
-    reluLayer('Name','relu4')
-    batchNormalizationLayer('Name','BN4')
     
-    % block 1
-    convolution2dLayer(3,128,'DilationFactor',2,'Padding','same','Name','conv5_1')
-    convolution2dLayer(3,128,'DilationFactor',2,'Padding','same','Name','conv5_2')
-    reluLayer('Name','relu5')
-    batchNormalizationLayer('Name','BN5')
+%     % block 3
+%     convolution2dLayer(3,512,'DilationFactor',8,'Padding','same','Name','conv3_1')
+%     convolution2dLayer(3,512,'DilationFactor',8,'Padding','same','Name','conv3_2')
+%     reluLayer('Name','relu3')
+%     batchNormalizationLayer('Name','BN3')
+%     
+%     % block 4
+%     convolution2dLayer(3,256,'DilationFactor',4,'Padding','same','Name','conv4_1')
+%     convolution2dLayer(3,256,'DilationFactor',4,'Padding','same','Name','conv4_2')
+%     reluLayer('Name','relu4')
+%     batchNormalizationLayer('Name','BN4')
+%     
+%     % block 1
+%     convolution2dLayer(3,128,'DilationFactor',2,'Padding','same','Name','conv5_1')
+%     convolution2dLayer(3,128,'DilationFactor',2,'Padding','same','Name','conv5_2')
+%     reluLayer('Name','relu5')
+%     batchNormalizationLayer('Name','BN5')
     
     % class layer
     convolution2dLayer(1,numClasses);
