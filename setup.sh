@@ -17,6 +17,8 @@ mkdir -p dataset/mnist/test_images
 mkdir -p dataset/mnist/test_masks
 
 mkdir -p dataset/preds
+mkdir -p dataset/mnist_preds
+mkdir -p dataset/mnist2856_preds
 
 # generate the datasets
 python dataset/unpack_m2nist.py && \

@@ -1,5 +1,8 @@
-% load the network 
-% load('net75_iou.mat')
+% load the test set 
+test_imds = imageDatastore('../dataset/m2nist/test_images/');
+test_pxds = pixelLabelDatastore('../dataset/m2nist/test_masks/',classNames,pixelLabelID);
+test_plds= pixelLabelImageDatastore(test_imds,test_pxds);
+pxdsPred = semanticseg(test_plds,net,'MiniBatchSize', 64, 'WriteLocation','../dataset/preds/');
 
 % read image from pixelImageLabelDatastore
 testImages=readByIndex(test_plds,75:100);

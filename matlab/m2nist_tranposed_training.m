@@ -1,5 +1,5 @@
 % load images
-imds = imageDatastore('images');
+imds = imageDatastore('../dataset/m2nist/images');
 
 % class names
 
@@ -7,7 +7,7 @@ classNames =["zero","one","two","three","four","five","six","seven","eight","nin
 
 pixelLabelID = [0,1,2,3,4,5,6,7,8,9,10];
 
-pxds = pixelLabelDatastore('masks',classNames,pixelLabelID);
+pxds = pixelLabelDatastore('../dataset/m2nist/masks',classNames,pixelLabelID);
 
 % count the pixels 
 
@@ -44,8 +44,8 @@ plds= pixelLabelImageDatastore(imds,pxds,'DataAugmentation',augmenter);
 plds = shuffle(plds);
 
 % load the test set 
-test_imds = imageDatastore('../matlab/images');
-test_pxds = pixelLabelDatastore('../matlab/masks',classNames,pixelLabelID);
+test_imds = imageDatastore('../dataset/m2nist/test_images/');
+test_pxds = pixelLabelDatastore('../dataset/m2nist/test_masks/',classNames,pixelLabelID);
 test_plds= pixelLabelImageDatastore(test_imds,test_pxds);
 
 
@@ -124,7 +124,7 @@ net = trainNetwork(plds,layers,opts);
 
 
 % make predictions 
-pxdsPred = semanticseg(test_plds,net,'MiniBatchSize', 64, 'WriteLocation','preds');
+pxdsPred = semanticseg(test_plds,net,'MiniBatchSize', 64, 'WriteLocation','../dataset/preds/');
 
 metrics = evaluateSemanticSegmentation(pxdsPred,test_plds);
 
