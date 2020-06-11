@@ -3,4 +3,4 @@
 *.png
 *.jpg
 *.hdf5
-*.npy*
+*.npy
