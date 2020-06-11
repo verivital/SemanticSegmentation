@@ -91,6 +91,7 @@ class M2NIST_2856:
         return image,mask
 
     def save_img_mask(self):
+        print("[INFO] Generating M2NIST 28x56 Images...")
         count =1
         # create a string name for the files
         img_str = os.path.join(self.img_dir,"image_{}.png")
@@ -112,6 +113,7 @@ class M2NIST_2856:
             cv2.imwrite(img_str.format(count),img)
             cv2.imwrite(mask_str.format(count),segmentation_mask)
             count +=1
+        print("[INFO] Finished Generating M2NIST 2856 Images...")
 
     def visualize_images(self):
         for (img,mask) in zip(self.images,self.masks):

@@ -62,6 +62,7 @@ class M2NIST_MASK:
             self.masks.append(mask)
 
     def save_img_mask(self):
+        print("[INFO] Generating M2NIST Masks...")
         count =1
         # create a string name for the files
         img_str = os.path.join(self.img_dir,"image_{}.png")
@@ -83,6 +84,8 @@ class M2NIST_MASK:
             cv2.imwrite(img_str.format(count),img)
             cv2.imwrite(mask_str.format(count),segmentation_mask)
             count +=1
+        
+        print("[INFO] Finished Generating M2NIST Masks...")
 
     def visualize_images(self):
         for (img,mask) in zip(self.images,self.masks):
@@ -123,7 +126,7 @@ if __name__=='__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument("-i,","--img_dir",required=True,help="path to directory to store image files")
     ap.add_argument("-m","--mask_dir",required=True,help="path to directory to store mask files")
-    ap.add_argument('-t','--train_or_test',type=bool,default=False,'flag that selects train or test. True corresponds to test')
+    ap.add_argument('-t','--train_or_test',type=bool,default=False,help='flag that selects train or test. True corresponds to test')
     args = vars(ap.parse_args())
 
     mnist= M2NIST_MASK(args['img_dir'],args['mask_dir'],train_or_test=args['train_or_test'])

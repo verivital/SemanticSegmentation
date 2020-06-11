@@ -19,6 +19,13 @@ mkdir -p dataset/mnist/test_masks
 mkdir -p dataset/preds
 
 # generate the datasets
+python dataset/unpack_m2nist.py && \
+python dataset/generate_M2NIST.py -n 50000 -d 3 -i dataset/m2nist/images -m dataset/m2nist/masks && \
+python dataset/generate2856.py -n 50000 -i dataset/m2nist2856/images -m dataset/m2nist2856/masks && \
+python dataset/generate2856.py -n 10000 -i dataset/m2nist2856/test_images -s 15 -m dataset/m2nist2856/test_masks && \
+python dataset/generate_MNIST_masks.py -i dataset/mnist/images -m dataset/mnist/masks && \
+python dataset/generate_MNIST_masks.py -i dataset/mnist/test_images -m dataset/mnist/test_masks -t 1 
+
 
 
 

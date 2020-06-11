@@ -12,14 +12,18 @@ Toolboxes utilized:
 - Parallel Computing Toolbox
 
 Python Packages: 
+- keras
 - Numpy
 - OpenCV
+- pathlib
 
 If you don't have the above python packages. They can be installed using pip. 
 
 ```
 $ pip install numpy
 $ pip install opencv-python
+$ pip install pathlib
+$ pip install keras
 ```
 
 ## Setup 
@@ -31,10 +35,10 @@ GPU(s): 1 GeForce GTX 1080
 To reproduce the results:
 
 ### Generate the Datasets 
-1. Download the M2NIST Dataset .npy files from the following [link](https://www.kaggle.com/farhanhubble/multimnistm2nist) and place them in this folder.
+1. Download the M2NIST Dataset .npy files from the following [link](https://www.kaggle.com/farhanhubble/multimnistm2nist) and place them in the dataset folder.
 2. Run setup.sh. 
 ```
-chmod u+x && ./setup.sh
+chmod u+x dataset/setup.sh && ./dataset/setup.sh
 ```
 
 ### Training Models

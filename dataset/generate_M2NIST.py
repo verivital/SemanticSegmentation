@@ -8,6 +8,7 @@ from sklearn.utils import shuffle
 import cv2 
 import os 
 import sys
+from pathlib import Path
 np.set_printoptions(threshold=sys.maxsize)
 
 """ This code generates the M2NIST Dataset and was inspired by Farhan Ahmad
@@ -48,7 +49,7 @@ class M2NIST:
             self.masks.append(mask)
 
         # save images and masks to the specified directories
-        #self.save_img_mask()
+        self.save_img_mask()
 
         # visualize if you want
         #self.visualize_images()
@@ -90,9 +91,9 @@ class M2NIST:
             if x_off_end <= self.canvas_size[0] and y_off_end <= self.canvas_size[1]:
                 src_img = src_images[i]
                 src_digit = src_labels[i]
-                labels[y_off_start:y_off_end,x_off_start:x_off_end,src_digit] = src_img
+                labels[x_off_start:x_off_end,y_off_start:y_off_end,src_digit] = src_img
 
-
+            
 
         image = np.max(labels, axis=2)
         mask = np.clip(labels,a_min=0,a_max=1)
@@ -122,6 +123,7 @@ class M2NIST:
 
 
     def save_img_mask(self):
+        print("[INFO] Generating M2NIST Images...")
         count =1
         # create a string name for the files
         img_str = os.path.join(self.img_dir,"image_{}.png")
@@ -143,6 +145,7 @@ class M2NIST:
             cv2.imwrite(img_str.format(count),img)
             cv2.imwrite(mask_str.format(count),segmentation_mask)
             count +=1
+        print("[INFO] Finished Generating M2NIST Images...")
 
     def visualize_images(self):
         for (img,mask) in zip(self.images,self.masks):

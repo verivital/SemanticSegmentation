@@ -2,13 +2,17 @@
 import numpy as np 
 import cv2
 import os
+import sys
+from pathlib import Path
 
 # Whether or not you want to display image:
 DISPLAY_IMAGE = False
 
-images = np.load('combined.npy')
-segmentation_masks= np.load('segmented.npy')
 
+images = np.load(os.path.join(str(Path(os.path.abspath(__file__)).parent),'combined.npy'))
+segmentation_masks= np.load(os.path.join(str(Path(os.path.abspath(__file__)).parent),'segmented.npy'))
+
+print("[INFO] Unpacking M2NIST")
 print("{INFO] Mask Classes: ",np.unique(segmentation_masks.argmax(axis=-1)))
 
 print(segmentation_masks.shape)
@@ -45,16 +49,17 @@ if DISPLAY_IMAGE:
 # save image 
 img_str = 'img_{}.png'
 for (i,img) in enumerate(images):
-    im_path=os.path.join('m2nist/test_images',img_str.format(i+1))
-    mask_path=os.path.join('m2nist/test_masks',img_str.format(i+1))
+    im_path=os.path.sep.join([str(Path(os.path.abspath(__file__)).parent),'m2nist/test_images',img_str.format(i+1)])
+    mask_path=os.path.sep.join([str(Path(os.path.abspath(__file__)).parent),'m2nist/test_masks',img_str.format(i+1)])
     cv2.imwrite(im_path,img)
 
     mask = segmentation_masks[i].astype("float")
     mask[0:mask.shape[0],0:mask.shape[1],10] = np.finfo(float).eps*10
     mask = mask.argmax(axis=-1)
-    print(np.unique(mask))
     
     # convert back to unit8
     masj=mask.astype('uint8')
     
     cv2.imwrite(mask_path, mask)
+
+print("Finished Unpacking M2NIST...")
