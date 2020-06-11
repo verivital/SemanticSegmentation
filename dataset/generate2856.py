@@ -153,6 +153,7 @@ if __name__=='__main__':
     ap.add_argument("-n", "--num_images", required=False,type=int,help="number of training images to generate")
     ap.add_argument("-i,","--img_dir",required=True,help="path to directory to store image files")
     ap.add_argument("-m","--mask_dir",required=True,help="path to directory to store mask files")
+    ap.add_argument('-s','--seed',required=False,type=int,default=15,help="random seed used to generate dataset")
     args = vars(ap.parse_args())
 
-    mnist_2856= M2NIST_2856(args['img_dir'],args['mask_dir'],size=args['num_images'],random_seed=1615) 
+    mnist_2856= M2NIST_2856(args['img_dir'],args['mask_dir'],size=args['num_images'],random_seed=args['seed']) 

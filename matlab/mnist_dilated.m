@@ -69,7 +69,7 @@ layers = [
     convolution2dLayer(3,256,'DilationFactor',4,'Padding','same','Name','conv2_1')
     convolution2dLayer(3,256,'DilationFactor',2,'Padding','same','Name','conv2_2')
     convolution2dLayer(3,256,'DilationFactor',4,'Padding','same','Name','conv2_3')
-    convolution2dLayer(3,256,'DilationFactor',2,'Padding','same','Name','conv2_4')
+    %convolution2dLayer(3,256,'DilationFactor',2,'Padding','same','Name','conv2_4')
     reluLayer('Name','relu2')
     batchNormalizationLayer('Name','BN2')
     

@@ -1,34 +1,29 @@
-load('net.mat');
+% load the network 
+% load('net75_iou.mat')
 
+% read image from pixelImageLabelDatastore
+testImages=readByIndex(test_plds,75:100);
 
-% load images
-imds_e = imageDatastore('images');
+for i=1:25
+    subplot(5,5,i)
+    im_pair = testImages(i,:);
+    img = im_pair.inputImage{:};
+    mask = im_pair.pixelLabelImage{:};
+    img_mask = labeloverlay(img,mask);
+    imshow(img_mask);
+    
+end
+sgtitle('Ground Truth')
 
-% class names
-
-classNames =["zero","one","two","three","four","five","six","seven","eight","nine","ten"];
-
-pixelLabelID = [0,1,2,3,4,5,6,7,8,9,10];
-
-pxds_e = pixelLabelDatastore('masks',classNames,pixelLabelID);
-
-% create the imageDataStore
-plds= pixelLabelImageDatastore(imds_e,pxds_e);
-
-% make predictions 
-pxdsPred = semanticseg(plds,net,'MiniBatchSize', 64, 'WriteLocation','preds');
-
-[test_image,test_image_gt]=readByIndex(plds,1);
-[pred_image,pred_image_gt]=readByIndex(plds,1);
-
-I = cell2mat(test_image.inputImage);
-B = test_image.pixelLabelImage{:};
-C = labeloverlay(I,B);
-imshow(C);
 figure()
-P = cell2mat(pred_image.inputImage);
-PB = uint8(pred_image.pixelLabelImage{:});
-PC = labeloverlay(P,PB);
-imshow(PC);
-
-metrics = evaluateSemanticSegmentation(pxdsPred,plds);
+mask_preds = readimage(pxdsPred,75:100);
+for j=1:25
+    subplot(5,5,j)
+    im_pair = testImages(j,:);
+    img = im_pair.inputImage{:};
+    mask = mask_preds{j};
+    img_mask = labeloverlay(img,mask);
+    imshow(img_mask);
+    
+end
+sgtitle('Predicted Masks')

@@ -237,6 +237,7 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("-n", "--num_images", required=False,type=int,help="number of training images to generate")
     ap.add_argument("-d", "--digits_per_image", required=False,type=int,help="how many images to put into the output image")
+    ap.add_argument('-s','--seed',required=False,type=int,default=15,help="random seed used to generate dataset")
     ap.add_argument("-i,","--img_dir",required=True,help="path to directory to store image files")
     ap.add_argument("-m","--mask_dir",required=True,help="path to directory to store mask files")
     args = vars(ap.parse_args())
@@ -244,12 +245,12 @@ if __name__ == "__main__":
     # Instantiate M2NIST Objects
     if(args['digits_per_image'] and args['num_images']):
         m2nist = M2NIST(args['img_dir'], args['mask_dir'],size=args['num_images'],
-                        digits_per_image=args['digits_per_image'])
+                        digits_per_image=args['digits_per_image'],random_seed=args['seed'])
     elif(args['digits_per_image']):
-        m2nist = M2NIST(args['img_dir'], args['mask_dir'],digits_per_image=args['digits_per_image'])
+        m2nist = M2NIST(args['img_dir'], args['mask_dir'],digits_per_image=args['digits_per_image'],random_seed=args['seed'])
     elif (args['num_images']):
-        m2nist = M2NIST(args['img_dir'], args['mask_dir'],size=args['num_images'])
+        m2nist = M2NIST(args['img_dir'], args['mask_dir'],size=args['num_images'],random_seed=args['seed'])
     else:
-        mnist=M2NIST(args['img_dir'], args['mask_dir'])
+        mnist=M2NIST(args['img_dir'], args['mask_dir'],random_seed=args['seed'])
 
         

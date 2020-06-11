@@ -12,11 +12,12 @@ np.set_printoptions(threshold=sys.maxsize)
 
 
 class M2NIST_MASK:
-    def __init__(self,img_dir,mask_dir):
+    def __init__(self,img_dir,mask_dir,train_or_test=False):
             
             self.img_dir = img_dir
             self.mask_dir = mask_dir
 
+            self.train_or_test=train_or_test
 
             # Load the MNIST Dataset
             (self.x_train, self.y_train), (self.x_test, self.y_test) = mnist.load_data()
@@ -37,9 +38,14 @@ class M2NIST_MASK:
             #self.visualize_images()
 
     def generate_image_segmentation_pair(self):
-    
-        src_images = self.x_train
-        src_labels =self.y_train
+        
+        if not self.train_or_test:
+            src_images = self.x_train
+            src_labels =self.y_train
+        else:
+            src_images = self.x_test
+            src_labels =self.y_test
+
 
 
         for i in range(len(src_images)):
@@ -117,6 +123,7 @@ if __name__=='__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument("-i,","--img_dir",required=True,help="path to directory to store image files")
     ap.add_argument("-m","--mask_dir",required=True,help="path to directory to store mask files")
+    ap.add_argument('-t','--train_or_test',type=bool,default=False,'flag that selects train or test. True corresponds to test')
     args = vars(ap.parse_args())
 
-    mnist= M2NIST_MASK(args['img_dir'],args['mask_dir'])
+    mnist= M2NIST_MASK(args['img_dir'],args['mask_dir'],train_or_test=args['train_or_test'])
