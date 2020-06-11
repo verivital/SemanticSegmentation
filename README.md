@@ -38,7 +38,7 @@ To reproduce the results:
 1. Download the M2NIST Dataset .npy files from the following [link](https://www.kaggle.com/farhanhubble/multimnistm2nist) and place them in the dataset folder.
 2. Run setup.sh. 
 ```
-chmod u+x dataset/setup.sh && ./dataset/setup.sh
+chmod u+x setup.sh && ./setup.sh
 ```
 
 ### Training Models
