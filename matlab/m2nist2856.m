@@ -1,5 +1,5 @@
 % load images
-imds = imageDatastore('mnist2856/images');
+imds = imageDatastore('../dataset/m2nist2856/images');
 
 % class names
 
@@ -7,7 +7,7 @@ classNames =["zero","one","two","three","four","five","six","seven","eight","nin
 
 pixelLabelID = [0,1,2,3,4,5,6,7,8,9,10];
 
-pxds = pixelLabelDatastore('mnist2856/masks',classNames,pixelLabelID);
+pxds = pixelLabelDatastore('../dataset/m2nist2856/masks',classNames,pixelLabelID);
 
 % count the pixels 
 
@@ -44,8 +44,8 @@ plds= pixelLabelImageDatastore(imds,pxds,'DataAugmentation',augmenter);
 plds = shuffle(plds);
 
 % load the test set 
-test_imds = imageDatastore('mnist2856/test_images');
-test_pxds = pixelLabelDatastore('mnist2856/test_masks',classNames,pixelLabelID);
+test_imds = imageDatastore('../dataset/m2nist2856/test_images');
+test_pxds = pixelLabelDatastore('../dataset/m2nist2856/test_masks',classNames,pixelLabelID);
 test_plds= pixelLabelImageDatastore(test_imds,test_pxds);
 
 
@@ -58,27 +58,27 @@ layers = [
     imageInputLayer(imageSize,'Name','input')
     
     % block 1
-    convolution2dLayer(3,128,'Padding','same','DilationFactor',2,'Name','conv1_1')
-    convolution2dLayer(3,128,'Padding','same')
+    convolution2dLayer(3,128,'Padding','same','Name','conv1_1')
+    convolution2dLayer(3,128,'Padding','same','Name','conv1_1')
     reluLayer('Name','relu1_1')
 %     convolution2dLayer(3,128,'Padding','same','Name','conv1_2')
 %     reluLayer('Name','relu1_2')
     batchNormalizationLayer('Name','BN1')
-    averagePooling2dLayer(2,'Stride',2,'Name','pool_1')
-    %maxPooling2dLayer(2,'Stride',2)
+    %averagePooling2dLayer(2,'Stride',2,'Name','pool_1')
+    maxPooling2dLayer(2,'Stride',2)
     
     % block 2
-    convolution2dLayer(3,256,'Padding','same','DilationFactor',2)
+    convolution2dLayer(3,256,'Padding','same')
     convolution2dLayer(3,256,'Padding','same')
     reluLayer()
 %     convolution2dLayer(3,256,'Padding','same')
 %     reluLayer()
     batchNormalizationLayer('Name','BN2')
-    averagePooling2dLayer(2,'Stride',2)
-    %maxPooling2dLayer(2,'Stride',2)
+    %averagePooling2dLayer(2,'Stride',2)
+    maxPooling2dLayer(2,'Stride',2)
     
     % block 3
-    convolution2dLayer(3,512,'Padding','same','DilationFactor',2)
+    convolution2dLayer(3,512,'Padding','same')
     convolution2dLayer(3,512,'Padding','same')
     reluLayer()
 %     convolution2dLayer(3,512,'Padding','same')
@@ -86,7 +86,7 @@ layers = [
     batchNormalizationLayer('Name','BN3')
     
     % block 4
-    convolution2dLayer(3,512,'Padding','same','DilationFactor',2)
+    convolution2dLayer(3,512,'Padding','same')
     convolution2dLayer(3,512,'Padding','same')
     reluLayer()
 %     convolution2dLayer(3,512,'Padding','same')
@@ -129,9 +129,12 @@ opts = trainingOptions('sgdm', ...
 net = trainNetwork(plds,layers,opts);
 
 
-% make predictions 
-pxdsPred = semanticseg(test_plds,net,'MiniBatchSize', 64, 'WriteLocation','preds');
+% make predictions  
+pxdsPred = semanticseg(test_plds,net,'MiniBatchSize', 64, 'WriteLocation','../dataset/m2nist2856_preds');
 
 metrics = evaluateSemanticSegmentation(pxdsPred,test_plds);
 
 save net
+
+
+
