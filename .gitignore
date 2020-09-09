@@ -4,3 +4,6 @@
 *.jpg
 *.hdf5
 *.npy
+*.csv
+*.zip
+*.DS_Store
