@@ -42,7 +42,7 @@ class ImageUtils:
         masks = np.asarray(masks)
         if grayscale:
             images = images.reshape((images.shape[0],images.shape[1],images.shape[2],1))
-        masks = images.reshape((masks.shape[0],masks.shape[1],masks.shape[2],1))
+        masks = masks.reshape((masks.shape[0],masks.shape[1],masks.shape[2],1))
 
         return images,masks
         

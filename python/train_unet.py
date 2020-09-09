@@ -13,6 +13,7 @@ from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
 import tensorflow.keras.backend as K  
 from tensorflow.keras.optimizers import SGD
 from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.metrics import MeanIoU
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -44,13 +45,13 @@ X_train, X_valid, y_train, y_valid = train_test_split(ims, msks, test_size=0.1, 
 
 model = Unet.build(128,128,1,1)
 
-model.compile(optimizer=Adam(), loss="binary_crossentropy", metrics=["accuracy"])
+model.compile(optimizer=Adam(), loss="binary_crossentropy", metrics=[MeanIoU(num_classes=2)])
 
 
 callbacks = [
     EarlyStopping(patience=10, verbose=1),
     ReduceLROnPlateau(factor=0.1, patience=5, min_lr=0.0001, verbose=1),
-    ModelCheckpoint(args['output'], verbose=1, save_best_only=True, save_weights_only=True)
+    ModelCheckpoint(args['output'], verbose=1, save_best_only=True, save_weights_only=False)
 ]
 
 
