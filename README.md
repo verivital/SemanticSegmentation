@@ -73,6 +73,7 @@ chmod u+x setup.sh && ./setup.sh
 The training scripts used to train the segmentation models are located in the [matlab](matlab) directory. 
 Execute each of them to train segmentation models on the datasets generated above. We also provide a set of pre-trained networks for each of the aforementioned datasets.
 
+To train the networks in matlab use the following [script](train_networks.m)
 
 # CAV2021 Networks 
 

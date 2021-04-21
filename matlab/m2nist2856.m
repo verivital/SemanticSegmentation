@@ -134,7 +134,10 @@ pxdsPred = semanticseg(test_plds,net,'MiniBatchSize', 64, 'WriteLocation','../da
 
 metrics = evaluateSemanticSegmentation(pxdsPred,test_plds);
 
-save net
+
+filename = strcat('models/m2nist/m2nist2856_transposed_',sprintf('%.2f',metrics.DataSetMetrics.WeightedIoU),'_iou.mat');
+save(filename,'net');
+
 
 
 
