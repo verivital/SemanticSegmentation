@@ -20,8 +20,14 @@ mkdir -p dataset/preds
 mkdir -p dataset/mnist_preds
 mkdir -p dataset/mnist2856_preds
 
+# unzip the m2nist.zip
+unzip m2nist.zip -d m2nist
+
+# copy the original files into the directory
+cp m2nist/*.npy dataset/
+
 # generate the datasets
-python dataset/unpack_m2nist.py && \
+python dataset/unpack_m2nist.py #&& \
 python dataset/generate_M2NIST.py -n 50000 -d 3 -i dataset/m2nist/images -m dataset/m2nist/masks && \
 python dataset/generate2856.py -n 50000 -i dataset/m2nist2856/images -m dataset/m2nist2856/masks && \
 python dataset/generate2856.py -n 10000 -i dataset/m2nist2856/test_images -s 15 -m dataset/m2nist2856/test_masks && \

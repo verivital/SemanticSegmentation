@@ -57,17 +57,13 @@ layers = [
     
     % block 1
     convolution2dLayer(3,128,'DilationFactor',2,'Padding','same','Name','conv1_1')
-    %convolution2dLayer(3,128,'DilationFactor',4,'Padding','same','Name','conv1_2')
     convolution2dLayer(3,128,'DilationFactor',2,'Padding','same','Name','conv1_3')
-    %convolution2dLayer(3,128,'DilationFactor',4,'Padding','same','Name','conv1_4')
     reluLayer('Name','relu1')
     batchNormalizationLayer('Name','BN1')
     
     % block 2
     convolution2dLayer(3,256,'DilationFactor',4,'Padding','same','Name','conv2_1')
-    %convolution2dLayer(3,256,'DilationFactor',8,'Padding','same','Name','conv2_2')
     convolution2dLayer(3,256,'DilationFactor',4,'Padding','same','Name','conv2_3')
-    %convolution2dLayer(3,256,'DilationFactor',8,'Padding','same','Name','conv2_4')
     reluLayer('Name','relu2')
     batchNormalizationLayer('Name','BN2')
     
@@ -120,6 +116,5 @@ pxdsPred = semanticseg(test_plds,net,'MiniBatchSize', 64, 'WriteLocation','preds
 
 metrics = evaluateSemanticSegmentation(pxdsPred,test_plds);
 
-save net
-
-
+filename = strcat('models/m2nist/m2nist_dilated_',sprintf('%.2f',metrics.DataSetMetrics.WeightedIoU),'_iou.mat');
+save(filename,'net');

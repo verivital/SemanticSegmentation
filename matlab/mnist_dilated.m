@@ -81,25 +81,6 @@ layers = [
     reluLayer('Name','relu2')
     batchNormalizationLayer('Name','BN3')
     
-    
-%     % block 3
-%     convolution2dLayer(3,512,'DilationFactor',8,'Padding','same','Name','conv3_1')
-%     convolution2dLayer(3,512,'DilationFactor',8,'Padding','same','Name','conv3_2')
-%     reluLayer('Name','relu3')
-%     batchNormalizationLayer('Name','BN3')
-%     
-%     % block 4
-%     convolution2dLayer(3,256,'DilationFactor',4,'Padding','same','Name','conv4_1')
-%     convolution2dLayer(3,256,'DilationFactor',4,'Padding','same','Name','conv4_2')
-%     reluLayer('Name','relu4')
-%     batchNormalizationLayer('Name','BN4')
-%     
-%     % block 1
-%     convolution2dLayer(3,128,'DilationFactor',2,'Padding','same','Name','conv5_1')
-%     convolution2dLayer(3,128,'DilationFactor',2,'Padding','same','Name','conv5_2')
-%     reluLayer('Name','relu5')
-%     batchNormalizationLayer('Name','BN5')
-    
     % class layer
     convolution2dLayer(1,numClasses);
     softmaxLayer()
@@ -131,5 +112,5 @@ net = trainNetwork(plds,layers,opts);
 pxdsPred = semanticseg(test_plds,net,'MiniBatchSize', 64, 'WriteLocation','../dataset/mnist_preds');
 
 metrics = evaluateSemanticSegmentation(pxdsPred,test_plds);
-
-save net
+filename = strcat('models/mnist/mnist_dilated_',sprintf('%.2f',metrics.DataSetMetrics.WeightedIoU),'_iou.mat');
+save(filename,'net');

@@ -117,7 +117,8 @@ net = trainNetwork(plds,layers,opts);
 
 % make predictions 
 pxdsPred = semanticseg(test_plds,net,'MiniBatchSize', 64, 'WriteLocation','../dataset/mnist_preds');
-
 metrics = evaluateSemanticSegmentation(pxdsPred,test_plds);
 
-save net
+
+filename = strcat('models/mnist/mnist_',sprintf('%.2f',metrics.DataSetMetrics.WeightedIoU),'_iou.mat');
+save(filename,'net');
