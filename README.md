@@ -80,11 +80,11 @@ To train the networks in matlab use the following [script](train_networks.m)
 The networks shown in Table 1 were trained using the following scripts. The model files will be stored in the [models](matlab/models/) directory. Each file is labled with the corresponding weighted iou.
 
 
-- N1: [matlab/mnist.m](matlab/mnist.m) | weights: [net_mnist_3_relu.mat](matlab/models/mnist/net_mnist_3_relu.mat) 
-- N2: [matlab/mnist_mp.m](matlab/mnist_mp.m) | weights: [net_mnist_3_relu_maxpool.mat](matlab/models/mnist/net_mnist_3_relu_maxpool.mat)
-- N3: [matlab/mnist_dilated.m](matlab/mnist_dilated.m) | weights: [net_mnist_dilated_83iou.mat](matlab/models/mnist/net_mnist_dilated_83iou.mat)
-- N4: [matlab/m2nist_dilated_ap.m](matlab/m2nist_dilated_ap.m)  | weights: [m2nist_62iou_dilatedcnn_avgpool.mat](matlab/models/m2nist/m2nist_62iou_dilatedcnn_avgpool.mat)
-- N5: [matlab/m2nist_tranposed_training.m](matlab/m2nist_tranposed_training.m) | weights: [net75iou_avgpool.mat](matlab/models/m2nist/net75iou_avgpool.mat)
-- N6: [matlab/m2nist_dilated.m](matlab/m2nist_dilated.m) | weights: [m2nist_dilated_72iou.mat](matlab/models/m2nist/m2nist_dilated_72iou.mat)
+- N1: [matlab/mnist.m](matlab/mnist.m) | pre-trained model and weights: [net_mnist_3_relu.mat](matlab/models/mnist/net_mnist_3_relu.mat) 
+- N2: [matlab/mnist_mp.m](matlab/mnist_mp.m) | pre-trained model and weights: [net_mnist_3_relu_maxpool.mat](matlab/models/mnist/net_mnist_3_relu_maxpool.mat)
+- N3: [matlab/mnist_dilated.m](matlab/mnist_dilated.m) | pre-trained model and weights: [net_mnist_dilated_83iou.mat](matlab/models/mnist/net_mnist_dilated_83iou.mat)
+- N4: [matlab/m2nist_dilated_ap.m](matlab/m2nist_dilated_ap.m)  | pre-trained model and weights: [m2nist_62iou_dilatedcnn_avgpool.mat](matlab/models/m2nist/m2nist_62iou_dilatedcnn_avgpool.mat)
+- N5: [matlab/m2nist_tranposed_training.m](matlab/m2nist_tranposed_training.m) | pre-trained model and weights: [net75iou_avgpool.mat](matlab/models/m2nist/net75iou_avgpool.mat)
+- N6: [matlab/m2nist_dilated.m](matlab/m2nist_dilated.m) | pre-trained model and weights: [m2nist_dilated_72iou.mat](matlab/models/m2nist/m2nist_dilated_72iou.mat)
 
 
