@@ -88,3 +88,25 @@ The networks shown in Table 1 were trained using the following scripts. The mode
 - N6: [matlab/m2nist_dilated.m](matlab/m2nist_dilated.m) | pre-trained model and weights: [m2nist_dilated_72iou.mat](matlab/models/m2nist/m2nist_dilated_72iou.mat)
 
 
+# Docker 
+
+The networks can also be trained through the use of docker. To build the docker container run the following:
+
+```
+$ ./build_docker
+```
+
+This will take 10-15 minutes depending on your machine. 
+Once that completes launch a container by running the following: 
+
+```
+$ xhost +local:docker
+$ ./run_docker.sh
+```
+In the container terminal run the below command. It will prompt you to provide a mathworks account login. Executing the command will begin training the networks. Accessing the model files can be done by editing the docker run command in run_docker.sh to include [volume tags](https://docs.docker.com/storage/volumes/).
+
+```
+matlab -r "run('SemanticSegmentation/matlab/train_networks.m')"
+```
+
+
